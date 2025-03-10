@@ -14,8 +14,6 @@ public class Etudiant {
     private String prenom;
     private String email;
 
-    public Etudiant() {}
-
     public Etudiant(int id, String nom, String prenom, String email) {
         this.id = id;
         this.nom = nom;

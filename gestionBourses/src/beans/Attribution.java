@@ -10,40 +10,41 @@ package beans;
  */
 public class Attribution {
     private int id;
-    private int etudiantId;
-    private int bourseId;
+    private Etudiant etudiant;
+    private Bourse bourse;
 
-    public Attribution() {}
-
-    public Attribution(int id, int etudiantId, int bourseId) {
+    public Attribution(int id, Etudiant etudiant, Bourse bourse) {
         this.id = id;
-        this.etudiantId = etudiantId;
-        this.bourseId = bourseId;
+        this.etudiant = etudiant;
+        this.bourse = bourse;
     }
 
     public int getId() {
-        return id; 
+        return id;
     }
+
     public void setId(int id) {
-        this.id = id; 
+        this.id = id;
     }
 
-    public int getEtudiantId() {
-        return etudiantId; 
-    }
-    public void setEtudiantId(int etudiantId) {
-        this.etudiantId = etudiantId; 
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
 
-    public int getBourseId() {
-        return bourseId; 
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
-    public void setBourseId(int bourseId) {
-        this.bourseId = bourseId; 
+
+    public Bourse getBourse() {
+        return bourse;
+    }
+
+    public void setBourse(Bourse bourse) {
+        this.bourse = bourse;
     }
 
     @Override
     public String toString() {
-        return "Attribution [id=" + id + ", etudiantId=" + etudiantId + ", bourseId=" + bourseId + "]";
+        return "Attribution [id=" + id + ", etudiant=" + etudiant + ", bourse=" + bourse + "]";
     }
 }

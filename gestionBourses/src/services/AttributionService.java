@@ -7,6 +7,7 @@ package services;
 
 import beans.Attribution;
 import beans.Bourse;
+import beans.Etudiant;
 import connexion.Connexion;
 import dao.IDao;
 import java.sql.PreparedStatement;
@@ -27,19 +28,24 @@ public class AttributionService implements IDao<Attribution> {
     }
 
     @Override
-    public boolean create(Attribution o) {
-        String req = "INSERT INTO Attribution (etudiant_id, bourse_id) VALUES (?, ?)";
-        try {
-            PreparedStatement ps = connexion.getCn().prepareStatement(req);
-            ps.setInt(1, o.getEtudiantId());
-            ps.setInt(2, o.getBourseId());
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+public boolean create(Attribution o) {
+    if (o.getEtudiant() == null || o.getBourse() == null) {
+        System.out.println("Erreur : L'étudiant ou la bourse est null.");
         return false;
     }
+
+    String req = "INSERT INTO Attribution (etudiant_id, bourse_id) VALUES (?, ?)";
+    try {
+        PreparedStatement ps = connexion.getCn().prepareStatement(req);
+        ps.setInt(1, o.getEtudiant().getId());
+        ps.setInt(2, o.getBourse().getId());
+        ps.executeUpdate();
+        return true;
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+    return false;
+}
 
     @Override
     public boolean delete(Attribution o) {
@@ -60,8 +66,8 @@ public class AttributionService implements IDao<Attribution> {
         String req = "UPDATE Attribution SET etudiant_id = ?, bourse_id = ? WHERE id = ?";
         try {
             PreparedStatement ps = connexion.getCn().prepareStatement(req);
-            ps.setInt(1, o.getEtudiantId());
-            ps.setInt(2, o.getBourseId());
+            ps.setInt(1, o.getEtudiant().getId());
+            ps.setInt(2, o.getBourse().getId());
             ps.setInt(3, o.getId());
             ps.executeUpdate();
             return true;
@@ -79,7 +85,9 @@ public class AttributionService implements IDao<Attribution> {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Attribution(rs.getInt("id"), rs.getInt("etudiant_id"), rs.getInt("bourse_id"));
+                Etudiant etudiant = new EtudiantService().findById(rs.getInt("etudiant_id"));
+                Bourse bourse = new BourseService().findById(rs.getInt("bourse_id"));
+                return new Attribution(rs.getInt("id"), etudiant, bourse);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -95,7 +103,9 @@ public class AttributionService implements IDao<Attribution> {
             PreparedStatement ps = connexion.getCn().prepareStatement(req);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                attributions.add(new Attribution(rs.getInt("id"), rs.getInt("etudiant_id"), rs.getInt("bourse_id")));
+                Etudiant etudiant = new EtudiantService().findById(rs.getInt("etudiant_id"));
+                Bourse bourse = new BourseService().findById(rs.getInt("bourse_id"));
+                attributions.add(new Attribution(rs.getInt("id"), etudiant, bourse));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -103,9 +113,19 @@ public class AttributionService implements IDao<Attribution> {
         return attributions;
     }
 
-    public List<Bourse> trouverBoursesParEtudiant(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Bourse> trouverBoursesParEtudiant(int etudiantId) {
+        List<Bourse> bourses = new ArrayList<>();
+        String req = "SELECT b.* FROM Bourse b JOIN Attribution a ON b.id = a.bourse_id WHERE a.etudiant_id = ?";
+        try {
+            PreparedStatement ps = connexion.getCn().prepareStatement(req);
+            ps.setInt(1, etudiantId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bourses.add(new Bourse(rs.getInt("id"), rs.getString("type"), rs.getDouble("montant")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return bourses;
     }
 }
-
-

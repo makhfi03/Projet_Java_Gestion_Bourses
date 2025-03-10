@@ -83,7 +83,7 @@ public class EtudiantService implements IDao<Etudiant> {
                 return new Etudiant(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Erreur lors de la recherche de l'étudiant : " + ex.getMessage());
         }
         return null;
     }
@@ -103,6 +103,21 @@ public class EtudiantService implements IDao<Etudiant> {
         }
         return etudiants;
     }
+    
+    public Etudiant findByEmail(String email) {
+    String req = "SELECT * FROM Etudiant WHERE email = ?";
+    try {
+        PreparedStatement ps = connexion.getCn().prepareStatement(req);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return new Etudiant(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"));
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+    return null;
+}
 }
 
 
