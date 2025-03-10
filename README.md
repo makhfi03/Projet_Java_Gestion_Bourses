@@ -30,7 +30,7 @@ Le projet est organisé en plusieurs packages pour une meilleure modularité :
 - **`services`** : Contient la logique métier et fait le lien entre l'interface utilisateur et le DAO.
 - **`test`** : Contient les classes de test pour vérifier le bon fonctionnement des autres packages.
 
-## Création de la Base de Données
+## Structure de la Base de Données
 
    ```sql
 
