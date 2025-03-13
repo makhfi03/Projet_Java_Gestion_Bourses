@@ -48,9 +48,9 @@ Le projet est organisé en plusieurs packages pour une meilleure modularité :
    );
 
    CREATE TABLE Attribution (
-       id INT AUTO_INCREMENT PRIMARY KEY,
        etudiant_id INT NOT NULL,
        bourse_id INT NOT NULL,
+       PRIMARY KEY (etudiant_id, bourse_id),
        FOREIGN KEY (etudiant_id) REFERENCES Etudiant(id),
        FOREIGN KEY (bourse_id) REFERENCES Bourse(id)
    );
