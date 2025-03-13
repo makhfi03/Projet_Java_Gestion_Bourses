@@ -9,22 +9,12 @@ package beans;
  * @author HNIA
  */
 public class Attribution {
-    private int id;
     private Etudiant etudiant;
     private Bourse bourse;
 
-    public Attribution(int id, Etudiant etudiant, Bourse bourse) {
-        this.id = id;
+    public Attribution(Etudiant etudiant, Bourse bourse) {
         this.etudiant = etudiant;
         this.bourse = bourse;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Etudiant getEtudiant() {
@@ -45,6 +35,6 @@ public class Attribution {
 
     @Override
     public String toString() {
-        return "Attribution [id=" + id + ", etudiant=" + etudiant + ", bourse=" + bourse + "]";
+        return "Attribution [etudiant=" + etudiant + ", bourse=" + bourse + "]";
     }
 }
