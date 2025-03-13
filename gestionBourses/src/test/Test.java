@@ -109,7 +109,7 @@ public class Test {
         Bourse bourseAttribution1 = bs.findById(1);
 
         if (etudiantAttribution1 != null && bourseAttribution1 != null) {
-            as.create(new Attribution(1, etudiantAttribution1, bourseAttribution1));
+            as.create(new Attribution(etudiantAttribution1, bourseAttribution1));
         } else {
             System.out.println("Erreur : l'étudiant ou la bourse est null.");
         }
@@ -118,7 +118,7 @@ public class Test {
         Bourse bourseAttribution2 = bs.findById(2);
 
         if (etudiantAttribution2 != null && bourseAttribution2 != null) {
-            as.create(new Attribution(2, etudiantAttribution2, bourseAttribution2));
+            as.create(new Attribution(etudiantAttribution2, bourseAttribution2));
         } else {
             System.out.println("Erreur : l'étudiant ou la bourse est null.");
         }
