@@ -102,20 +102,21 @@ public class BourseService implements IDao<Bourse> {
         return bourses;
     }
     
-    public Bourse findByType(String type) {
-    String req = "SELECT * FROM Bourse WHERE type = ?";
+    public List<Bourse> findByType(String type) {
+        List<Bourse> bourses = new ArrayList<>();
+        String req = "SELECT * FROM Bourse WHERE type = ?";
     try {
         PreparedStatement ps = connexion.getCn().prepareStatement(req);
         ps.setString(1, type);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return new Bourse(rs.getInt("id"), rs.getString("type"), rs.getDouble("montant"));
-        }
+        while (rs.next()) {
+                bourses.add(new Bourse(rs.getInt("id"), rs.getString("type"), rs.getDouble("montant")));
+            }
     } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
     }
-    return null;
+    return bourses;
+  }
 }
-    }
 
    
