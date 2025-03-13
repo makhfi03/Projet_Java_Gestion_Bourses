@@ -28,31 +28,32 @@ public class AttributionService implements IDao<Attribution> {
     }
 
     @Override
-public boolean create(Attribution o) {
-    if (o.getEtudiant() == null || o.getBourse() == null) {
-        System.out.println("Erreur : L'étudiant ou la bourse est null.");
+    public boolean create(Attribution o) {
+        if (o.getEtudiant() == null || o.getBourse() == null) {
+            System.out.println("Erreur : L'étudiant ou la bourse est null.");
+            return false;
+        }
+
+        String req = "INSERT INTO Attribution (etudiant_id, bourse_id) VALUES (?, ?)";
+        try {
+            PreparedStatement ps = connexion.getCn().prepareStatement(req);
+            ps.setInt(1, o.getEtudiant().getId());
+            ps.setInt(2, o.getBourse().getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         return false;
     }
 
-    String req = "INSERT INTO Attribution (etudiant_id, bourse_id) VALUES (?, ?)";
-    try {
-        PreparedStatement ps = connexion.getCn().prepareStatement(req);
-        ps.setInt(1, o.getEtudiant().getId());
-        ps.setInt(2, o.getBourse().getId());
-        ps.executeUpdate();
-        return true;
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-    }
-    return false;
-}
-
     @Override
     public boolean delete(Attribution o) {
-        String req = "DELETE FROM Attribution WHERE id = ?";
+        String req = "DELETE FROM Attribution WHERE etudiant_id = ? AND bourse_id = ?";
         try {
             PreparedStatement ps = connexion.getCn().prepareStatement(req);
-            ps.setInt(1, o.getId());
+            ps.setInt(1, o.getEtudiant().getId());
+            ps.setInt(2, o.getBourse().getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -63,12 +64,11 @@ public boolean create(Attribution o) {
 
     @Override
     public boolean update(Attribution o) {
-        String req = "UPDATE Attribution SET etudiant_id = ?, bourse_id = ? WHERE id = ?";
+        String req = "UPDATE Attribution SET bourse_id = ? WHERE etudiant_id = ?";
         try {
             PreparedStatement ps = connexion.getCn().prepareStatement(req);
-            ps.setInt(1, o.getEtudiant().getId());
-            ps.setInt(2, o.getBourse().getId());
-            ps.setInt(3, o.getId());
+            ps.setInt(1, o.getBourse().getId());
+            ps.setInt(2, o.getEtudiant().getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -79,15 +79,21 @@ public boolean create(Attribution o) {
 
     @Override
     public Attribution findById(int id) {
-        String req = "SELECT * FROM Attribution WHERE id = ?";
+        // Since there is no id in Attribution, this method might not be applicable
+        return null;
+    }
+
+    public Attribution findByEtudiantAndBourse(int etudiantId, int bourseId) {
+        String req = "SELECT * FROM Attribution WHERE etudiant_id = ? AND bourse_id = ?";
         try {
             PreparedStatement ps = connexion.getCn().prepareStatement(req);
-            ps.setInt(1, id);
+            ps.setInt(1, etudiantId);
+            ps.setInt(2, bourseId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Etudiant etudiant = new EtudiantService().findById(rs.getInt("etudiant_id"));
                 Bourse bourse = new BourseService().findById(rs.getInt("bourse_id"));
-                return new Attribution(rs.getInt("id"), etudiant, bourse);
+                return new Attribution(etudiant, bourse);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -105,7 +111,7 @@ public boolean create(Attribution o) {
             while (rs.next()) {
                 Etudiant etudiant = new EtudiantService().findById(rs.getInt("etudiant_id"));
                 Bourse bourse = new BourseService().findById(rs.getInt("bourse_id"));
-                attributions.add(new Attribution(rs.getInt("id"), etudiant, bourse));
+                attributions.add(new Attribution(etudiant, bourse));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
