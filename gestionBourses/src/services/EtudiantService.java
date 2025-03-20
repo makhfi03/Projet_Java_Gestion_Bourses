@@ -83,7 +83,7 @@ public class EtudiantService implements IDao<Etudiant> {
                 return new Etudiant(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Erreur lors de la recherche de l'étudiant : " + ex.getMessage());
         }
         return null;
     }
