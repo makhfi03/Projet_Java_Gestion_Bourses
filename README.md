@@ -1,6 +1,6 @@
 # Gestion des Bourses
 
-![Logo du projet](images/logoSjt.png)
+![Logo du projet](https://feg.univ-amu.fr/sites/default/files/styles/actu_full/public/media-images/FORMAT%20SITE%281%29_10.png?itok=qU2C0POh/logo.png)
 
 ## Description du Projet
 
