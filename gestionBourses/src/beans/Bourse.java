@@ -18,6 +18,11 @@ public class Bourse {
         this.type = type;
         this.montant = montant;
     }
+    
+    public Bourse(String type, double montant){
+        this.type = type;
+        this.montant = montant;
+    }
 
     public int getId() { 
         return id; 
