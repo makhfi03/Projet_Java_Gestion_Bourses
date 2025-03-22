@@ -1,5 +1,7 @@
 # Gestion des Bourses
 
+![Logo du projet](C:\Users\HNIA\Documents\NetBeansProjects\gestionBourses\src\images)
+
 ## Description du Projet
 
 Ce projet consiste à développer une application de gestion des bourses pour les établissements d'éducation (écoles, universités, instituts). L'application permet de gérer les bourses, les étudiants, et les attributions de bourses aux étudiants. 
