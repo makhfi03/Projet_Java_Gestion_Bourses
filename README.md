@@ -1,6 +1,6 @@
 # Gestion des Bourses
 
-![Logo du projet](C:\Users\HNIA\Documents\NetBeansProjects\gestionBourses\src\images)
+![Logo du projet](images/logoSjt.png)
 
 ## Description du Projet
 
