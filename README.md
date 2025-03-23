@@ -34,10 +34,10 @@ Le projet est organisé en plusieurs packages pour une meilleure modularité :
 
 ## Diagrammes UML
 #Diagramme de Cas d'utilisation
-![Cas d'utilisation](images/1.png)
+![1](https://github.com/user-attachments/assets/47774985-6f4d-4fa0-850e-06e6e724344c)
 
 #Diagramme de Classe
-![de classe](images/2.png)
+![2](https://github.com/user-attachments/assets/834b1bc8-5456-4d2c-b877-94bfbc7fe666)
 
 ## Structure de la Base de Données
 
