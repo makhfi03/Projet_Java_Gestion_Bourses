@@ -32,6 +32,13 @@ Le projet est organisé en plusieurs packages pour une meilleure modularité :
 - **`services`** : Contient la logique métier et fait le lien entre l'interface utilisateur et le DAO.
 - **`test`** : Contient les classes de test pour vérifier le bon fonctionnement des autres packages.
 
+## Diagrammes UML
+#Diagramme de Cas d'utilisation
+![Cas d'utilisation](images/Cas d'utilisation (g.bourses).png)
+
+#Diagramme de Classe
+![de classe](images/diag classe.png)
+
 ## Structure de la Base de Données
 
    ```sql
